@@ -9,7 +9,14 @@ export class Item {
   @Column({ type: "varchar", length: 255 })
   name: string
 
-  @Column({ type: "varchar", length: 100, unique: true })
+  @Column({
+    type: "varchar",
+    length: 100,
+    transformer: {
+      to: (value: string) => value?.trim().toLowerCase(),
+      from: (value: string) => value
+    }
+  })
   sku: string
 
   @Column({ type: "text", nullable: true })

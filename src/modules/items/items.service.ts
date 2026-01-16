@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from "@nestjs/common"
+import { Injectable, NotFoundException, ConflictException } from "@nestjs/common"
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
 import { Item } from "./entities/item.entity"
@@ -45,6 +45,7 @@ export class ItemsService {
     if (!item) {
       throw new NotFoundException(`Item with ID ${id} not found`)
     }
+
     Object.assign(item, updateItemDto)
     const savedItem = await this.itemsRepository.save(item)
     await this.checkAndCreateAlerts(savedItem)
